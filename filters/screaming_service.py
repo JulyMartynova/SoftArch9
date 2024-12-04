@@ -1,6 +1,7 @@
 # filters/screaming_service.py
 import time
 
+
 def screaming_service(input_pipe, output_pipe):
     while True:
         message = input_pipe.recv()  # Get message

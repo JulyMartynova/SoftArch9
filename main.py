@@ -3,6 +3,7 @@ import psutil
 from pipes_and_filters import run_pipes_and_filters
 from rabbitmq import run_rabbitmq
 
+
 def measure_performance(func, iterations=1):
     start_time = time.time()
 
@@ -14,7 +15,7 @@ def measure_performance(func, iterations=1):
         print(f'[ITERATION] {i + 1}')
         process = psutil.Process()
 
-        
+
         cpu_usage.append(process.cpu_percent(interval=0.1))
         memory_usage.append(process.memory_info().rss / (1024 * 1024))
 

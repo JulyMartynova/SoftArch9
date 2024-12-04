@@ -3,6 +3,7 @@ import time
 
 stop_words = ['bird-watching', 'ailurophobia', 'mango']
 
+
 def filter_service(input_pipe, output_pipe):
     while True:
         message = input_pipe.recv()  # Get message from channel
