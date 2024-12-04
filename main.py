@@ -4,35 +4,32 @@ from pipes_and_filters import run_pipes_and_filters
 from rabbitmq import run_rabbitmq
 
 def measure_performance(func, iterations=1):
-    start_time = time.time()  # Замер времени начала
+    start_time = time.time()
 
-    # Инициализация мониторинга ресурсов
+
     cpu_usage = []
     memory_usage = []
 
     for i in range(iterations):
         print(f'[ITERATION] {i + 1}')
-        process = psutil.Process()  # Создание процесса для мониторинга
+        process = psutil.Process()
 
-        # Замер текущих ресурсов до выполнения функции
-        cpu_usage.append(process.cpu_percent(interval=0.1))  # Процент использования CPU
-        memory_usage.append(process.memory_info().rss / (1024 * 1024))  # Используемая память в МБ
+        
+        cpu_usage.append(process.cpu_percent(interval=0.1))
+        memory_usage.append(process.memory_info().rss / (1024 * 1024))
 
-        func()  # Запуск тестируемой функции
+        func()
         print('///////////////------------------')
         print()
 
-    end_time = time.time()  # Замер времени завершения
+    end_time = time.time()
 
-    # Общие результаты
     total_time = end_time - start_time
     avg_time = total_time / iterations
 
-    # Среднее использование ресурсов
     avg_cpu_usage = sum(cpu_usage) / len(cpu_usage)
     avg_memory_usage = sum(memory_usage) / len(memory_usage)
 
-    # Пиковые значения
     peak_cpu_usage = max(cpu_usage)
     peak_memory_usage = max(memory_usage)
 
@@ -40,9 +37,8 @@ def measure_performance(func, iterations=1):
 
 
 def main():
-    iterations = 1 # Количество итераций для тестирования
+    iterations = 1
 
-    # Тестирование pipes-and-filters
     print("Testing Pipes-and-Filters Architecture...")
     pf_total_time, pf_avg_time, pf_avg_cpu, pf_avg_mem, pf_peak_cpu, pf_peak_mem = measure_performance(
         run_pipes_and_filters, iterations)
@@ -55,7 +51,7 @@ def main():
 
     print('\n\n')
 
-    # Тестирование RabbitMQ
+
     print("Testing RabbitMQ Architecture...")
     rmq_total_time, rmq_avg_time, rmq_avg_cpu, rmq_avg_mem, rmq_peak_cpu, rmq_peak_mem = measure_performance(
         run_rabbitmq, iterations)
@@ -66,7 +62,6 @@ def main():
     print(f"RabbitMQ Peak CPU Usage: {rmq_peak_cpu:.2f}%")
     print(f"RabbitMQ Peak Memory Usage: {rmq_peak_mem:.2f} MB\n")
 
-    # Вывод сравнительного отчета
     print("Performance Comparison Report:")
     print(f"- Pipes-and-Filters Avg Time: {pf_avg_time:.4f} sec")
     print(f"- RabbitMQ Avg Time: {rmq_avg_time:.4f} sec")

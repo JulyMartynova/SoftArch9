@@ -4,7 +4,7 @@ import pika
 
 app = Flask(__name__)
 
-# Настройка соединения с RabbitMQ
+# Configuration of connection with RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='message_queue')
@@ -16,7 +16,7 @@ def send_message():
     user_alias = data.get('alias')
     message = data.get('message')
 
-    # Отправка сообщения в очередь
+    # Sending messages to queue
     channel.basic_publish(exchange='',
                           routing_key='message_queue',
                           body=f"{user_alias}:{message}")

@@ -1,7 +1,7 @@
 # filter_service.py
 import pika
 
-# Настройка соединения
+# Setting of connection
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='message_queue')

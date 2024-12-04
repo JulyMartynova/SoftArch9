@@ -22,8 +22,8 @@ def send_email(message):
 
 def publish_service(pipe):
     while True:
-        message = pipe.recv()  # Получаем сообщение
-        if message == 'END':  # Проверка на окончание
+        message = pipe.recv()  # Get message
+        if message == 'END':  # Check for ending
             break
         print(f"Sending email for message: {message}")
-        send_email(message)  # Отправляем письмо
+        send_email(message)  # Send message

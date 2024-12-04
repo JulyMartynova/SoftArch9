@@ -18,22 +18,22 @@ def run_rabbitmq():
         processes.append(p)
         p.start()
 
-    # URL вашего API
+    # URL of API
     url = "http://localhost:5000/send_message"
 
-    # Данные, которые нужно отправить
+    # Data to send
     data = {
         "alias": "professor",
         "message": "Hello World!555"
     }
 
-    # Заголовки запроса
+    # Headers of request
     headers = {
         "Content-Type": "application/json"
     }
 
     for i in range(3):
-        # Отправка POST-запроса
+        # Sending POST - request
         while True:
             try:
                 response = requests.post(url, json=data, headers=headers)
@@ -41,15 +41,15 @@ def run_rabbitmq():
                 continue
             break
 
-        # Проверка ответа
+        # Checking answer
         print("Status Code:", response.status_code)
         print("Response Body:", response.text)
         time.sleep(0.1)
 
-    # Ожидаем завершения всех процессов
+    # Waiting ending of processes
     for p in processes:
-        p.terminate()  # Безопасное завершение процессов
-        p.join()  # Дожидаемся завершения каждого процесса
+        p.terminate()  # Safe ending
+        p.join()  # Waiting of process ending
 
 if __name__ == '__main__':
     run_rabbitmq()
